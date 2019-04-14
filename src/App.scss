@@ -20,3 +20,32 @@ body{
   padding: 10px;
   border:1px solid #ccc;
 }
+
+
+.layout_row{
+  li{
+    display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  line-height: 32px;
+  .i_name{
+    width: 50%;
+  }
+  .i_price{
+    width: 50%;
+  }
+  }
+  
+
+}
+
+.layout_category_row{
+  border-bottom: 1px solid #eee;
+  line-height: 30px;
+}
+
+.layout_pro_table{
+  .i_logo{
+    width: 50px;
+  }
+}
