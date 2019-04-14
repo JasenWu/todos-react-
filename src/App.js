@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
 
 
@@ -32,12 +32,11 @@ class SearchBar extends Component{
   render(){
     return (
       <section className='layout_search_wrap'>
-        <input type='text' /><br/>
-        <section>
-         <input type="checkbox"/>
+        <input className='i_input' type='text' />
+        <section className='i_des' >
+          <input type="checkbox"/>
           <span>only show products in stocks</span>
         </section>
-        
       </section>
     )
   }

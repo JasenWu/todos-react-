@@ -1,0 +1,22 @@
+
+body{
+  padding: 10px;
+}
+
+.layout_search_wrap{
+  background: #eee;
+  padding: 10px;
+   .i_input{
+     width: 100%;
+     height: 32px;
+   }
+   .i_des{
+     display: flex;
+     justify-content: flex-start;
+   }
+}
+
+.layout_list_wrap{
+  padding: 10px;
+  border:1px solid #ccc;
+}
