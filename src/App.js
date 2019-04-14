@@ -15,7 +15,8 @@ class FilterableProductTable extends Component {
     super(props)
     
     this.state = {
-      datas:JSON.parse(JSON.stringify(datas))
+      datas:JSON.parse(JSON.stringify(datas)),
+      stocked:true
     }
 
   }
@@ -24,7 +25,7 @@ class FilterableProductTable extends Component {
      
     let res = []
     datas.forEach((v1,k1)=>{
-      //console.log('v1',v1.name.toLocaleLowerCase(),'v',v.toLocaleLowerCase(),'re',v.indexOf(v1.name));
+       
       if(v && (v1.name.toLocaleLowerCase().indexOf(v.toLocaleLowerCase()) > -1)){
         res.push(v1);
       }
@@ -42,13 +43,21 @@ class FilterableProductTable extends Component {
     })
 
   }
+  handerChangeCheck(v){
+ 
+    this.setState({
+      stocked:
+      v
+    })
+
+  }
   
   render() {
     return (
       <section className='layout_pro_table'>
         <p><img className='i_logo' alt = 'logo' src={logo} /></p>
-        <SearchBar handerChangeValue={this.handerChangeValue.bind(this)} />
-        <ProductTable result={this.state.datas} />
+        <SearchBar handerChangeCheck={this.handerChangeCheck.bind(this)} handerChangeValue={this.handerChangeValue.bind(this)} />
+        <ProductTable stocked={this.state.stocked} result={this.state.datas} />
       </section>
 
     )
@@ -59,7 +68,8 @@ class SearchBar extends Component {
   constructor(props){
     super(props)
     this.state={
-      sarchValue:''
+      sarchValue:'',
+      checked:true,
     }
   }
   handerChange(e){
@@ -69,13 +79,21 @@ class SearchBar extends Component {
     })
     this.props.handerChangeValue(v)
   }
+  handerChangeCheck(e){
+    let v = !e.target.value || ''
+   
+    this.setState({
+      checked:v
+    })
+    this.props.handerChangeCheck(v)
+  }
 
   render() {
     return (
       <section className='layout_search_wrap'>
         <input className='i_input' onChange={this.handerChange.bind(this)} defaultValue={this.state.sarchValue} placeholder='search' type='text' />
         <section className='i_des' >
-          <input type="checkbox" />
+          <input onChange={this.handerChangeCheck.bind(this)} defaultChecked={true} defaultValue={this.state.checked} type="checkbox" />
           <span>only show products in stocks</span>
         </section>
       </section>
@@ -87,15 +105,14 @@ class SearchBar extends Component {
 class ProductTable extends Component {
   // constructor(props){
   //   super(props)
-
+ 
   // }
   render() {
     return (<section className='layout_list_wrap'>
       <ProductCategoryRow title="Sporting Goods" />
-      <ProductRow result={this.props.result} />
+      <ProductRow stocked={this.props.stocked} result={this.props.result} />
       <ProductCategoryRow title="Electronics" />
-      <ProductRow result={this.props.result} />
-
+      <ProductRow  stocked={this.props.stocked} result={this.props.result} />
     </section>)
   }
 }
@@ -112,9 +129,20 @@ class ProductCategoryRow extends Component {
 class ProductRow extends Component {
   render() {
     let datas = this.props.result;
+    let curData = []
+    if(!this.props.stocked){
+     
+      curData = datas.filter((v,k)=>{
+        return v.stocked === true
+      })
+    }else{
+      curData = datas
+    }
+
+    console.log('curData',curData)
 
     return (<ul className='layout_row'>
-      {datas.map((v, k) => {
+      {curData.map((v, k) => {
         return (<li key={k}>
           <span className='i_name'>
             {v.name}
