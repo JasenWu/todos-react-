@@ -17,7 +17,8 @@ class FilterableProductTable extends Component {
     
     this.state = {
       datas:JSON.parse(JSON.stringify(datas)),
-      stocked:true
+      stocked:true,
+      searchVal:''
     }
 
   }
